@@ -1,32 +1,32 @@
 <?php
 require 'flight/Flight.php';
 
-// Connexion à la base de données PostgreSQL
-$db_host = 'localhost';
-$db_user = 'postgres';
-$db_password = 'postgres';
-$db_name = 'LostInZoom';
+// Connexion au geoserveur distant (à conserver)
+$geoserver_url = 'https://lostinzoom.huma-num.fr/geoserver/';
+$username = 'admin';
+$password = 'geoserver';
 
-$conn = pg_connect("host=$db_host dbname=$db_name port='5432' user=$db_user password=$db_password");
-if (!$conn) {
-    die("<script>console.log('Erreur de connexion');</script>" . pg_last_error());
-} else {
-    echo "<script>console.log('Connexion réussie');</script>";
-}
+// Suppression de toute connexion à la base PostgreSQL locale
 
 // Route principale
 Flight::route('GET /', function () {
     Flight::render('accueil');
 });
 
-// Route pour enregistrer un participant
-Flight::route('/index_LBC.php', function () use ($conn) {
-    $query = "INSERT INTO participants (created_at) VALUES (CURRENT_TIMESTAMP) RETURNING id";
-    $result = pg_query($conn, $query);
-    
-    if ($result) {
-        $row = pg_fetch_assoc($result);
-        $id = $row['id'];
+// Route pour afficher la page d'expérience (ne crée plus de participant)
+Flight::route('/index_LBC.php', function () {
+    Flight::render('index_LBC');
+});
+
+// Route de fin (ne stocke plus rien)
+Flight::route('/fin', function () {
+    Flight::render('fin');
+});
+
+Flight::start();
+?>
+Flight::start();
+?>
         session_start();
         $_SESSION['participant_id'] = $id;
     }
