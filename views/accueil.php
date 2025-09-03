@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/accueil_style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="container">
+        <img id="logo" src="ressources/image/ign.png"><br>
+        <h1>Bienvenue</h1><br>
+
+        <p> Vous vous apprêtez à participer à une expérience de recherche en cartographie, intégrée dans le projet LostInZoom. La carte multi-échelle est ici l’objet d’étude, avec ses multiples représentations échelonnées sur plusieurs niveaux de zoom. En effet, chaque donnée est soumise à une simplification de plus en plus forte à mesure que l’échelle rétrécit, pour que la carte reste tout le temps lisible. Or, nous ne savons pas quelle échelle est la plus adaptée pour chaque représentation.
+
+L’objectif de cette expérience est de vous placer dans le rôle d’un designer pour mieux comprendre vos choix cartographiques. Vous aurez ainsi la possibilité de définir les échelles de visibilité pour chaque représentation et créer une carte qui vous semble progressive et claire. Cette expérience s’adresse surtout aux personnes ayant déjà une sensibilité cartographique.
+L’expérience dure en moyenne 30 minutes.
+</p>
+        <!-- Groupe de boutons pour ouvrir la popup et accéder à la carte -->
+        <div class="button-group">
+            <button class="btn btn-outline-primary btn-lg mt-3" onclick="openPopup()">Formulaire d'accès</button>
+            <a href="/index_LBC.php" class="btn btn-success btn-lg mt-3" id="accessApp">Accéder à l'application</a>
+        </div>
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" onclick="closePopup()">X</span>
+                <h2>Formulaire de consentement :</h2>
+                <form id="consentForm">
+                    <p>Dans le cadre de cette étude expérimentale, nous vous invitons à donner votre consentement pour participer.
+                    Votre contribution est essentielle pour nous aider à mieux comprendre les choix et préférences liés au design des cartes interactives.
+                    L’IGN, institution hôte de ces recherches est le contrôleur des données, et responsable de votre information et de son utilisation. Nous n’allons pas conserver la moindre information permettant de vous identifier après l’expérience.
+                    Vous n’avez également pas l’obligation de participer et vous pouvez arrêter à tout moment.
+                </p>
+    
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="participationConsent" name="participationConsent" required>
+                        <label class="form-check-label" for="participationConsent">
+            J’accepte de participer à une expérience dont l’objectif est de mieux comprendre quels sont les éléments les plus saillants visuellement dans une carte.
+           
+                
+        
+        </label>
+                    </div>
+    
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="resultsReuseConsent" name="resultsReuseConsent" required>
+                        <label class="form-check-label" for="resultsReuseConsent">
+                        J'accepte la réutilisation de mes résultats dans le cadre d'un sujet de recherche.
+                        </label>
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary mt-3">Valider</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script src="/assets/accueil.js"></script>
+</body>
+</html>
+

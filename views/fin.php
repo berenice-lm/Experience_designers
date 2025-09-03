@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/fin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="container">
+        <img id="logo" src="ressources/image/ign.png"><br>
+        <h1>Merci pour votre participation !</h1><br>
+        <p  class="p-style-1" >Pour en savoir plus sur le projet, vous pouvez vous rendre sur le site <a href="https://lostinzoom.github.io/home/" target="_blank">https://lostinzoom.github.io/home/</a>.</p>
+
+        <p class="p-style-2"> Laure Gregoire et Elisa Peyrard, supervisées par Bérénice Le Mao et Guillaume Touya </p>
+    </div>
+
+    
+
+    <script src="/assets/fin.js"></script>
+</body>
+</html>
+

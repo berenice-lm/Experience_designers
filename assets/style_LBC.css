@@ -1,0 +1,347 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+}
+
+#zoom {
+    position: absolute;
+    z-index: 9;
+    top: 5px;
+    right: 5px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(225, 225, 225, 0.6);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px
+}
+
+.mousePosition {
+    position: fixed;
+    top: auto;
+    right: auto;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(225, 225, 225, 0.6);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+}
+
+/* organisation bandeau */
+#toggleButton {
+    background-color: rgba(110, 143, 213, 0);
+    color: rgb(110, 143, 213);
+    border: none;
+    padding: 2px 6px; 
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-radius: 5px; 
+    font-size: 12px; 
+}
+
+#toggleButton:hover {
+    background-color: #555;
+}
+
+
+/* Bandeau principal */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-color: #fdffffc1;
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden;
+    transition: height 0.3s ease;
+    
+}
+
+.bottom-bar.collapsed {
+    height: 6%; 
+    overflow: hidden;
+}
+
+.bottom-bar.collapsed .flex-row {
+    display: none; 
+}
+
+.bottom-bar-header {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    padding: 5px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 10%; 
+    display: none;
+    justify-content: space-between;
+}
+
+
+
+/* Style des éléments individuels */
+select {
+    width: 80px;
+    text-align: center;
+    justify-content: space-between;
+    font-size: 12px;
+    margin:10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(25, 50, 104);
+}
+
+.pixel {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(25, 50, 104);
+    text-align: center;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start;
+    flex-wrap: nowrap; 
+}
+
+/* Colonne pour les checkboxes */
+.flex-checkboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px; 
+    margin-left: auto; 
+    width: 10%; 
+}
+
+/* Styles pour les checkboxes et leurs labels */
+.flex-checkboxes input[type="checkbox"] {
+    margin-right: 5px;
+}
+.flex-checkboxes label {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(25, 50, 104);
+}
+
+.first-column {
+    margin-top: 25px; /* Décale la première colonne vers le bas */
+    margin-left: 10px;
+}
+
+.row-label {
+    margin-bottom: 25px; /* Ajoute de l'espace entre chaque ligne */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    color: rgb(25, 50, 104);
+}
+
+#infoButton {
+    position: absolute;
+    top: 50px; /* Aligne le bouton sous le zoom */
+    right: 5px; /* Aligne le bouton avec le zoom */
+    z-index: 9; /* Assure que le bouton est visible au-dessus de la carte */
+    background-color: rgba(255, 255, 255, 0.5); /* Fond du bouton */
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px; /* Ajout d'un espacement entre les boutons */
+}
+
+#infoButton2 {
+    position: absolute;
+    top: 100px; /* Aligne le bouton sous le premier bouton avec plus d'espace */
+    right: 5px; /* Aligne le bouton avec le zoom */
+    z-index: 9; /* Assure que le bouton est visible au-dessus de la carte */
+    background-color:rgba(255, 255, 255, 0.5);/* Fond du bouton */
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#infoButton2:hover {
+    background-color: rgba(255, 255, 255, 1); /* Fond plus clair au survol */
+}
+
+
+
+
+#infoButton:hover {
+    background-color: rgba(255, 255, 255, 1); /* Fond plus clair au survol */
+}
+
+
+/* Le fond de la fenêtre modale */
+.modal {
+    display: none; /* Par défaut, la fenêtre est cachée */
+    position: fixed;
+    z-index: 10; /* Au-dessus du reste du contenu */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(225, 225, 225, 0.6);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px /* Fond semi-transparent */
+}
+
+.modal2 {
+    display: none; /* Par défaut, la fenêtre est cachée */
+    position: fixed;
+    z-index: 10; /* Au-dessus du reste du contenu */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(225, 225, 225, 0.6);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px /* Fond semi-transparent */
+}
+
+
+/* Contenu de la modale */
+.modal-content {
+    background-color:  rgba(255, 255, 255, 0.6);
+    margin: 15% auto; /* Centrer verticalement */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: justify;
+}
+
+/* Bouton pour fermer la fenêtre */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+
+
+
+
+/* Style du rectangle qui apparaîtra lors du clic */
+.highlight-rectangle {
+    position: absolute;
+    border: 2px solid rgba(255, 0, 0, 0.7); /* Rouge avec transparence */
+    background-color: rgba(255, 0, 0, 0.1); /* Fond léger pour le rectangle */
+    pointer-events: none; /* Empêche l'interaction avec le rectangle */
+    display: none; /* Par défaut, il est caché */
+}
+
+/* Style des éléments qui déclenchent l'affichage du rectangle */
+.highlight {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+#finishButton{
+    position: absolute;
+    top: 130px; /* Aligne le bouton sous le zoom */
+    right: 100px; /* Aligne le bouton avec le zoom */
+    z-index: 9; /* Assure que le bouton est visible au-dessus de la carte */
+    background-color: rgba(255, 44, 44, 0.5); /* Fond du bouton */
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px; /* Ajout d'un espacement entre les boutons */ 
+}
+#finishButton:hover {
+    background-color: #835a5a;
+}
+
+
+
+
+#legend {
+    background-color:  rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 150px;
+    right: 10px;
+    z-index: 999;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-color {
+    width: 20px;   /* Large rectangle pour la végétation */
+    height: 20px;
+    margin-right: 10px;
+}
+
+.legend-line {
+    width: 20px;   /* Rectangle plus fin pour la route */
+    height: 5px;   /* Épaisseur de la ligne */
+    margin-right: 10px;
+}
+
+.legend-point {
+    width: 20px;   /* Largeur de la ligne */
+    height: 5px;   /* Épaisseur de la ligne */
+    margin-right: 10px;
+    border-top: 2px dashed #000000; /* Bordure pointillée (ici bleu pour les routes) */
+}
+
+.legend-text {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
