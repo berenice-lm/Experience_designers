@@ -3,6 +3,12 @@
 
 ## Construire une carte pan-scalaire
 
+à remplir
+
 ## Type d'utilisateur
 
-## Conseils d'utilisation
+à remplir
+
+## Avertissement
+
+L'expérience présentée a été modifiée pour être publiée facilement sur Github pages. Il n'existe aucune connexion à une base de données Postgres, comme ça l'a été lors du déroulé de l'expérience : l'objectif est surtout d'y présenter son interface.
