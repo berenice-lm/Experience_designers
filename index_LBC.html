@@ -20,12 +20,18 @@
             <span class="legend-text">Routes</span>
         </div>
         <div class="legend-item">
-            <span class="legend-color" style="background-color:#B6EFCD;"></span>
+            <span class="legend-color" id="vegetationColor" style="background-color:#B6EFCD;"></span> <!-- Couleur par défaut -->
             <span class="legend-text">Végétation</span>
         </div>
         <div class="legend-item">
             <span class="legend-point"></span>
             <span class="legend-text">Limites <br>départementales</span>
+        </div>
+
+        <!-- Déplacer ici le sélecteur de couleur -->
+        <div class="color-picker-container">
+            <label for="urbanColorPicker">Couleur des aires urbaines :</label>
+            <input type="color" id="urbanColorPicker" value="#f8f7f7"> <!-- Couleur par défaut corrigée -->
         </div>
     </div>
 
@@ -77,7 +83,7 @@
             <button id="toggleButton">Réduire</button>
         </div>
 
-        <form  action="/fin" method="post">
+        <form  action="fin.html" method="post">
 
         <div class="flex-row">
             <div class="flex-column columnVille first-column">
@@ -90,9 +96,9 @@
                 <div class="pixel"> en dessous de 10</div>
                 <select class="batimentSelect" name="zoom_9[batiment]" data-zoom="9" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect"name="zoom_9[urban]" data-zoom="9" data-type="urban">
@@ -115,16 +121,19 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
             <div class="flex-column columnVille">
                 <div class="pixel">zoom 10-11</div>
                 <select class="batimentSelect" name="zoom_10[batiment]" data-zoom="10" data-type="batiment">
-                    <option value="">Chosir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="">Choisir</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_10[urban]" data-zoom="10" data-type="urban">
@@ -147,6 +156,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -154,9 +166,9 @@
                 <div class="pixel">zoom 11-12</div>
                 <select class="batimentSelect" name="zoom_11[batiment]" data-zoom="11" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_11[urban]" data-zoom="11" data-type="urban">
@@ -179,6 +191,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -186,9 +201,9 @@
                 <div class="pixel">zoom 12-13</div>
                 <select class="batimentSelect" name="zoom_12[batiment]" data-zoom="12" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_12[urban]" data-zoom="12" data-type="urban">
@@ -211,6 +226,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -218,9 +236,9 @@
                 <div class="pixel">zoom 13-14</div>
                 <select class="batimentSelect" name="zoom_13[batiment]" data-zoom="13" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_13[urban]" data-zoom="13" data-type="urban">
@@ -243,6 +261,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -250,9 +271,9 @@
                 <div class="pixel">zoom 14-15</div>
                 <select class="batimentSelect" name="zoom_14[batiment]" data-zoom="14" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_14[urban]" data-zoom="14" data-type="urban">
@@ -275,6 +296,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -282,13 +306,13 @@
                 <div class="pixel">zoom 15-16</div>
                 <select class="batimentSelect" name="zoom_15[batiment]" data-zoom="15" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
                     <option value=""> Rien </option>
                 </select>
-                <select class="urbanSelect" dname="zoom_15[urban]" data-zoom="15" data-type="urban">
-                    <option value="">Choisir</option>
+                <select class="urbanSelect" name="zoom_15[urban]" data-zoom="15" data-type="urban">
+                    <option value="" selected>Choisir</option> <!-- Valeur par défaut -->
                     <option value="urban_area_zoom10">A</option>
                     <option value="urban_area_zoom11">B</option>
                     <option value="urban_area_zoom12">C</option>
@@ -307,6 +331,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>
@@ -314,9 +341,10 @@
                 <div class="pixel">zoom 16</div>
                 <select class="batimentSelect" name="zoom_16[batiment]" data-zoom="16" data-type="batiment">
                     <option value="">Choisir</option>
-                    <option value="buildings_z17">A</option>
-                    <option value="buildings_z18">B</option>
-                    <option value="important_buildings">C</option>
+                    <option value="important_buildings">A</option>
+                    <option value="buildings_z17">B</option>
+                    <option value="buildings_z18">C</option>
+                    
                     <option value=""> Rien </option>
                 </select>
                 <select class="urbanSelect" name="zoom_16[urban]" data-zoom="16" data-type="urban">
@@ -339,6 +367,9 @@
                     <option value="points_zoom13">F</option>
                     <option value="points_zoom14">G</option>
                     <option value="points_zoom15">H</option>
+                    <option value="points_zoom16">I</option>
+                    <option value="points_zoom17">J</option>
+                    <option value="points_zoom18">K</option>
                     <option value=""> Rien </option>
                 </select>
             </div>      
@@ -713,7 +744,7 @@
 
 
     </div>
-    <script src="/assets/main_LBC.js" defer></script>
+    <script src="assets/main_LBC.js" defer></script>
     <script src="ressources/ol/ol.js"></script>
     <script src="ressources/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
    

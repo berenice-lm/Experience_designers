@@ -2,7 +2,7 @@
 var defaultZoom = 9;
 
 var extent = ol.proj.transformExtent(
-    [-1.25, 43, 0.9, 43.9], // Coordonnées en EPSG:4326 (lon/lat)
+    [-1.5, 42.8, 1.2, 44.1], // Coordonnées élargies en EPSG:4326 (lon/lat)
     'EPSG:4326', 
     'EPSG:3857' // Transformation vers la projection utilisée
 );
@@ -20,7 +20,7 @@ var mapView = new ol.View({
     center: ol.proj.fromLonLat([0, 43.5]),
     zoom: defaultZoom,
     minZoom: 9,
-    maxZoom: 16,
+    maxZoom: 17,
     extent: extent,
     constrainResolution: false
 });
@@ -54,19 +54,31 @@ var fondWMSLayer = new ol.layer.Tile({
     name: 'Fond personnalisé' // Identifiant de la couche
 });
 
-//************ A RAJOUTER LAURE  ***************************
+//************ ROUTES  ***************************
+var routesWMSLayer_ini = new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+        url: 'https://lostinzoom.huma-num.fr/geoserver/wms', // Remplacez par l'URL correcte
+        params: {
+            'LAYERS': 'la_bonne_carte:PlanIGN_n0_ini',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    }),
+    name: 'Routes_ini',
+    zIndex: 9 // Juste derrière les toponymes
+});
+
 var routesWMSLayer = new ol.layer.Tile({
     source: new ol.source.TileWMS({
         url: 'https://lostinzoom.huma-num.fr/geoserver/wms', // Remplacez par l'URL correcte
         params: {
-            'LAYERS': 'la_bonne_carte:PlanIGN_n0_up',
+            'LAYERS': 'la_bonne_carte:PlanIGN_n0',
             'TILED': true
         },
         serverType: 'geoserver'
     }),
     name: 'Routes',
-    minZoom: 15,  
-    maxZoom: 17,
+    zIndex: 9 // Juste derrière les toponymes
 });
 
 
@@ -74,14 +86,13 @@ var routesWMSLayer10 = new ol.layer.Tile({
     source: new ol.source.TileWMS({
         url: 'https://lostinzoom.huma-num.fr/geoserver/wms', // Remplacez par l'URL correcte
         params: {
-            'LAYERS': 'la_bonne_carte:PlanIGN_n10_up',
+            'LAYERS': 'la_bonne_carte:PlanIGN_n10',
             'TILED': true
         },
         serverType: 'geoserver'
     }),
     name: 'Routes10',
-    minZoom: 14,  
-    maxZoom: 17,
+    zIndex: 9 // Juste derrière les toponymes
 });
 
 var routesWMSLayer25 = new ol.layer.Tile({
@@ -94,8 +105,7 @@ var routesWMSLayer25 = new ol.layer.Tile({
         serverType: 'geoserver'
     }),
     name: 'Routes25',
-    minZoom: 12,  
-    maxZoom: 17,
+    zIndex: 9 // Juste derrière les toponymes
 });
 
 var routesWMSLayer50 = new ol.layer.Tile({
@@ -108,14 +118,8 @@ var routesWMSLayer50 = new ol.layer.Tile({
         serverType: 'geoserver'
     }),
     name: 'Routes50',
-    minZoom: 9,  
-    maxZoom: 12,
+    zIndex: 9 // Juste derrière les toponymes
 });
-
-
-
-
-
 
 var vegetaWMSLayer25 = new ol.layer.Tile({
     source: new ol.source.TileWMS({
@@ -132,7 +136,7 @@ var vegetaWMSLayer25 = new ol.layer.Tile({
     
 });
 
-
+//************ VEGETATION  ***************************
 var vegetaWMSLayer50 = new ol.layer.Tile({
     source: new ol.source.TileWMS({
         url: 'https://lostinzoom.huma-num.fr/geoserver/wms', // Remplacez par l'URL correcte
@@ -145,19 +149,32 @@ var vegetaWMSLayer50 = new ol.layer.Tile({
     name: 'veget50',
     minZoom: 9,  
     maxZoom: 12,
-    
 });
 
+//************ LIMITE DEPARTEMENTALE  ***************************
+var limite_dep = new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+        url: 'https://lostinzoom.huma-num.fr/geoserver/wms', // Remplacez par l'URL correcte
+        params: {
+            'LAYERS': 'la_bonne_carte:limite_dep_bon',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    }),
+    name: 'limite_dep',
+});
 
 
 // Ajouter la couche à la carte (sans suppression des autres couches)
 map.addLayer(fondWMSLayer);
 map.addLayer(vegetaWMSLayer25)
 map.addLayer(vegetaWMSLayer50)
+map.addLayer(limite_dep)
 map.addLayer(routesWMSLayer50)
 map.addLayer(routesWMSLayer25)
 map.addLayer(routesWMSLayer10)
 map.addLayer(routesWMSLayer)
+map.addLayer(routesWMSLayer_ini)
 
 //************************* FIN  ***************************
 
@@ -268,27 +285,51 @@ document.querySelectorAll('.urbanSelect').forEach(select => {
         const zoomLevel = parseInt(select.dataset.zoom, 10); 
         const selectedUrban = event.target.value; 
 
-        // Stocke le choix utilisateur
-        userUrbanChoices[zoomLevel] = selectedUrban;
+        // Si aucune sélection n'est faite (valeur vide), supprimer le choix et mettre à jour la visibilité
+        if (!selectedUrban) {
+            delete userUrbanChoices[zoomLevel];  // Supprime le choix pour ce niveau
+            console.log(`Niveau de zoom ${zoomLevel} : aucune couche sélectionnée`);
+            updateLayerVisibility(userUrbanChoices, 'urban_area');
+            return;
+        }
 
+        // Sinon, stocker le choix utilisateur
+        userUrbanChoices[zoomLevel] = selectedUrban;
         console.log(`Niveau de zoom ${zoomLevel} : couche sélectionnée = ${selectedUrban}`);
 
-        // Mettre à jour la visibilité des couches
-        updateLayerVisibility(userUrbanChoices,'urban_area');
+        // Mise à jour de la visibilité des couches
+        updateLayerVisibility(userUrbanChoices, 'urban_area');
     });
 });
 
 // Mise à jour de la visibilité lors du changement de zoom
 map.getView().on('change:resolution', function() {
-    updateLayerVisibility(userUrbanChoices,'urban_area');
+    updateLayerVisibility(userUrbanChoices, 'urban_area');
 });
 
+// Fonction pour mettre à jour la couleur des aires urbaines
+function updateUrbanAreaColor(color) {
+    map.getLayers().forEach(function(layer) {
+        if (layer.get('name') && layer.get('name').startsWith('urban_area')) {
+            layer.setStyle(new ol.style.Style({
+                fill: new ol.style.Fill({ color: color }),
+                stroke: new ol.style.Stroke({ color: '#000', width: 1 }) // Optionnel : bordure noire
+            }));
+        }
+    });
+}
+
+// Ajouter un écouteur pour le sélecteur de couleur
+document.getElementById('urbanColorPicker').addEventListener('input', function(event) {
+    const selectedColor = event.target.value; // Récupère la couleur sélectionnée
+    updateUrbanAreaColor(selectedColor); // Met à jour la couleur des aires urbaines
+});
 
 //HABITATION
 var batiments = [
-    { name: 'buildings_z17', zIndex: 5 },
-    { name: 'buildings_z18', zIndex: 5 },
-    { name: 'important_buildings', zIndex: 5 },
+    { name: 'important_buildings', zIndex: 7 },
+    { name: 'buildings_z17', zIndex: 7 },
+    { name: 'buildings_z18', zIndex: 7 },
 ];
 var userBuildingChoices = {}; 
 
@@ -381,14 +422,14 @@ map.getView().on('change:resolution', function() {
 
 // HYDRO
 var hydro = [
-    { name: 'hydro_10', zIndex: 2 },
-    { name: 'hydro_11', zIndex: 2 },
-    { name: 'hydro_12', zIndex: 2 },
-    { name: 'hydro_13', zIndex: 1 },
-    { name: 'hydro_14', zIndex: 1 },
-    { name: 'hydro_15', zIndex: 1 },
-    { name: 'hydro_16', zIndex: 1 },
-    { name: 'hydro_17', zIndex: 1 },
+    { name: 'hydro_10', zIndex: 5 },
+    { name: 'hydro_11', zIndex: 5 },
+    { name: 'hydro_12', zIndex: 5 },
+    { name: 'hydro_13', zIndex: 5 },
+    { name: 'hydro_14', zIndex: 5 },
+    { name: 'hydro_15', zIndex: 5 },
+    { name: 'hydro_16', zIndex: 5 },
+    { name: 'hydro_17', zIndex: 5 },
 ];
 
 // Stocke les choix des utilisateurs pour chaque niveau de zoom
@@ -419,12 +460,12 @@ map.getView().on('change:resolution', function() {
 
 // SURFACE HYDRO
 var hydro_surf = [
-    { name: 'hydro_surf10', zIndex: 1 },
-    { name: 'hydro_surf11temp', zIndex: 1 },
-    { name: 'hydro_surf12', zIndex: 1 },
-    { name: 'hydro_surf13', zIndex: 1 },
-    { name: 'hydro_surf14', zIndex: 1 },
-    { name: 'hydro_surf15', zIndex: 1 }
+    { name: 'hydro_surf10', zIndex: 6 },
+    { name: 'hydro_surf11temp', zIndex: 6 },
+    { name: 'hydro_surf12', zIndex: 6 },
+    { name: 'hydro_surf13', zIndex: 6 },
+    { name: 'hydro_surf14', zIndex: 6 },
+    { name: 'hydro_surf15', zIndex: 6 }
 ];
 var userHydroSurfChoices = {}; 
 // Ajoute toutes les couches hydro_surf à la carte
@@ -654,11 +695,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
-
-
-
-
-// ************FIN DE CE QU'IL FAUT RAJOUTER !!!******************

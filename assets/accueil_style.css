@@ -1,5 +1,5 @@
 body {
-    background-image:url("/ressources/image/fondvert.jpg");;
+    background-image:url("../ressources/image/fondvert.jpg");;
     font-family: 'Radio Canada Big', sans-serif;
     background-size: cover;
     display: flex;

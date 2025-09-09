@@ -316,6 +316,11 @@ select {
     z-index: 999;
 }
 
+.color-picker-container {
+    margin-top: 10px; /* Espacement avec la légende */
+    text-align: left;
+}
+
 .legend-item {
     display: flex;
     align-items: center;
